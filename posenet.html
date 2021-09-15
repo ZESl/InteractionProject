@@ -11,7 +11,7 @@
 
     <!-- keep the video in center of browser -->
     <style type="text/css">
-        body{
+        body {
             text-align: center;
         }
 
@@ -21,33 +21,54 @@
 
         #left {
             width: 50%;
-            display: inline;
-            float:left;
+            height: 100%;
+            float: left;
+            text-align: center;
+            position: relative;
         }
 
-        #right{
+        #right {
             width: 50%;
-            display: inline;
-            float:right;
+            height: 100%;
+            float: right;
+            text-align: center;
+            position: relative;
+            background-color: #EFEFEF;
+        }
+
+        #centerImage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 20px solid #EFEFEF;
+        }
+
+        #videoContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 20px solid white;
         }
 
     </style>
 </head>
 <body>
-    <div id="container">
-        <h1>PoseNet demo with Ml5.js</h1>
-        <p id="status">Loading Model...</p>
-
-<!--        display the image-->
-        <div id="left">
-            <img src="resized/10-10.png" alt="" id="centerimage"/>
-        </div>
-
-<!--        display the video-->
-        <div id="right">
-            <div id="videoContainer"></div>
-        </div>
-        <script src="posenet.js"></script>
+<div id="container">
+    <!--        <h1>PoseNet demo with Ml5.js</h1>-->
+    <!--        <p id="status">Loading Model...</p>-->
+    <!--        display the image-->
+    <div id="left">
+        <!--            set the center image-->
+        <img src="images/50-50.png" alt="" id="centerImage"/>
     </div>
+
+    <!--        display the video-->
+    <div id="right">
+        <div id="videoContainer"></div>
+    </div>
+    <script src="posenet.js"></script>
+</div>
 </body>
 </html>

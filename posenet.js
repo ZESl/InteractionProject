@@ -44,10 +44,10 @@ function detectHandMovements() {
             let movementy = pose.rightWrist.y - rightWrist.y;      // y axis elbow movement
 
             // threshold can be modified
-            let threshold = 50;
+            let threshold = 30;
 
             if (Math.abs(movementx) > threshold || Math.abs(movementy) > threshold) {
-                let imagescr = document.getElementById('centerimage').src.toString();
+                let imagescr = document.getElementById('centerImage').src.toString();
                 imagescr = imagescr.split('/').pop();
                 imagescr = imagescr.split('.')[0].split('-');      // eg. ['20','20']
                 console.log(imagescr);
@@ -55,26 +55,25 @@ function detectHandMovements() {
                 let row = parseInt(imagescr[0]);
                 let col = parseInt(imagescr[1]);
 
-                // 分类讨论
-                let total = 20;
+                let total = 100;    // todo to be modified
                 if (Math.abs(movementx) > threshold) {
                     let offsetx = pose.rightWrist.x - pose.rightShoulder.x;     // x axis distance between elbow and shoulder
                     if (offsetx < 0) {
                         if (col < total) {
                             col += 1;
                         } else {
-                            col = parseInt(total/2);
+                            col = parseInt(total / 2);
                         }
                         console.log('rightWrist move right ' + movementx);
                     } else {
                         if (col > 0) {
                             col -= 1;
                         } else {
-                            col = parseInt(total/2);
+                            col = parseInt(total / 2);
                         }
                         console.log('rightWrist move left ' + movementx);
                     }
-                    document.getElementById('centerimage').src = 'resized/' + row + '-' + col + '.png';
+                    document.getElementById('centerImage').src = 'images/' + row + '-' + col + '.png';
                     rightWrist.x = pose.rightWrist.x;
                 }
                 if (Math.abs(movementy) > threshold) {
@@ -83,18 +82,18 @@ function detectHandMovements() {
                         if (row > 0) {
                             row -= 1;
                         } else {
-                            row = parseInt(total/2);
+                            row = parseInt(total / 2);
                         }
                         console.log('rightWrist move up ' + movementy);
                     } else {
                         if (row < total) {
                             row += 1;
                         } else {
-                            row = parseInt(total/2);
+                            row = parseInt(total / 2);
                         }
                         console.log('rightWrist move down ' + movementy);
                     }
-                    document.getElementById('centerimage').src = 'resized/' + row + '-' + col + '.png';
+                    document.getElementById('centerImage').src = 'images/' + row + '-' + col + '.png';
                     rightWrist.y = pose.rightWrist.y;
                 }
             }
