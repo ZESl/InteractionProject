@@ -96,7 +96,7 @@ function changeCenterImage() {
                 let row = parseInt(imagescr[0]);
                 let col = parseInt(imagescr[1]);
 
-                let total = 100;    // todo to be modified
+                let total = 100;    // todo change to 1000
                 if (offsetx < 0) {
                     if (col < total) {
                         col += 1;
