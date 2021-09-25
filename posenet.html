@@ -58,7 +58,7 @@
         #centerCanvas {
             position: absolute;
             width: 640px;
-            height: 480px;
+            height: 500px;
             z-index: 10;
             top: 50%;
             left: 50%;
@@ -76,16 +76,14 @@
             height: 20px;
         }
 
-        #start {
+        #canvasTop {
             position: absolute;
             width: 640px;
-            height: 200px;
+            height: 220px;
 
             font-family: PT Sans;
             font-style: normal;
             font-weight: bold;
-            font-size: 64px;
-            line-height: 83px;
             text-align: center;
 
             color: #FFFFFF;
@@ -94,6 +92,19 @@
             text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
         }
+
+        #topText{
+            margin-top: 10px;
+            font-size: 20px;
+            line-height: 20px;
+        }
+        #start {
+            position: absolute;
+            width: 640px;
+            height: 200px;
+            font-size: 50px;
+            line-height: 70px;
+        }
     </style>
 </head>
 <body>
@@ -101,8 +112,11 @@
     <!--        display the image-->
     <div id="left">
         <div id="centerCanvas">
-            <div id="point"><img src="pointer.png" alt=""/></div>
-            <div id="start">START</div>
+<!--            <div id="point"><img src="pointer.png" alt=""/></div>-->
+            <div id="canvasTop">
+                <div id="topText">Raise Left Arm To...</div>
+                <div id="start">START</div>
+            </div>
 <!--            todo change to "images/500-500.png"-->
             <img src="images/50-50.png" alt="" id="centerImage"/>
         </div>

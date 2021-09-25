@@ -24,6 +24,7 @@ function setup() {
         poses = results;
     });
 
+    console.log("start detecting...")
     initHand();
 
     // Hide the video element, and just show the canvas
@@ -41,28 +42,54 @@ function waitSwitchOff() {
     waitSwitch = false;
 }
 
+// // detectHandMovements with pointer
+// function detectHandMovements() {
+//     if (poses.length > 0) {
+//         let pose = poses[0].pose;   //detect the first pose
+//         let confidence = 0.1;
+//         if (pose.leftWrist.confidence > confidence) {
+//             let y = pose.leftWrist.y;
+//             let x = pose.leftWrist.x;
+//
+//             document.getElementById('point').style.left = (640 - x).toString() + "px";
+//             document.getElementById('point').style.top = y.toString() + "px";
+//
+//             if ((640 - x) > 0 && (640 - x) < 320 && y > 0 && y < 200) {
+//                 if (detectSwitch) {
+//                     detectSwitch = false;
+//                     document.getElementById('start').innerHTML = "START";
+//                     document.getElementById('start').style.backgroundColor = "#B7EF26";
+//                     console.log("switch:off");
+//                 } else {
+//                     detectSwitch = true;
+//                     document.getElementById('start').innerHTML = "STOP";
+//                     document.getElementById('start').style.backgroundColor = "#FFD90F";
+//                     console.log("switch:on");
+//                 }
+//                 waitSwitch = true;
+//                 setTimeout(waitSwitchOff, 1000);
+//             }
+//         }
+//     }
+// }
+
 function detectHandMovements() {
     if (poses.length > 0) {
         let pose = poses[0].pose;   //detect the first pose
         let confidence = 0.1;
-        if (pose.leftWrist.confidence > confidence) {
-            console.log(poses[0].pose.leftWrist);
-            let y = pose.leftWrist.y;
-            let x = pose.leftWrist.x;
+        if (pose.leftElbow.confidence > confidence && pose.leftShoulder.confidence > confidence) {
+            let y = pose.leftShoulder.y - pose.leftElbow.y;
 
-            document.getElementById('point').style.left = (640 - x).toString() + "px";
-            document.getElementById('point').style.top = y.toString() + "px";
-
-            if ((640 - x) > 0 && (640 - x) < 320 && y > 0 && y < 200) {
+            if (y > 10) {
                 if (detectSwitch) {
                     detectSwitch = false;
                     document.getElementById('start').innerHTML = "START";
-                    document.getElementById('start').style.backgroundColor = "#B7EF26";
+                    document.getElementById('canvasTop').style.backgroundColor = "#B7EF26";
                     console.log("switch:off");
                 } else {
                     detectSwitch = true;
                     document.getElementById('start').innerHTML = "STOP";
-                    document.getElementById('start').style.backgroundColor = "#FFD90F";
+                    document.getElementById('canvasTop').style.backgroundColor = "#FFD90F";
                     console.log("switch:on");
                 }
                 waitSwitch = true;
@@ -79,9 +106,9 @@ function changeCenterImage() {
         let confidence = 0.4;
 
         if (pose.rightWrist.confidence > confidence && pose.rightShoulder.confidence > confidence) {
-            console.log(rightWrist);
+            console.log("rightWrist:", pose.rightWrist, " rightShoulder", pose.rightShoulder);
             // threshold can be modified
-            let threshold = 30;
+            let threshold = 100;
 
             // let pose.rightShoulder be the center of the circle
             let offsetx = pose.rightWrist.x - pose.rightShoulder.x;     // x axis distance between elbow and shoulder
@@ -97,7 +124,7 @@ function changeCenterImage() {
                 let col = parseInt(imagescr[1]);
 
                 let total = 100;    // todo change to 1000
-                if (offsetx < 0) {
+                if (Math.abs(offsetx) > threshold && offsetx < 0) {
                     if (col < total) {
                         col += 1;
                     } else {
@@ -105,7 +132,7 @@ function changeCenterImage() {
                     }
                     document.getElementById('centerImage').style.borderRightColor = "#B5E2E8";
                     console.log('rightWrist move right');
-                } else {
+                } else if (Math.abs(offsetx) > threshold && offsetx > 0) {
                     if (col > 0) {
                         col -= 1;
                     } else {
@@ -117,7 +144,7 @@ function changeCenterImage() {
                 document.getElementById('centerImage').src = 'images/' + row + '-' + col + '.png';
                 rightWrist.x = pose.rightWrist.x;
 
-                if (offsety < 0) {
+                if (Math.abs(offsety) > threshold && offsety < 0) {
                     if (row > 0) {
                         row -= 1;
                     } else {
@@ -125,7 +152,7 @@ function changeCenterImage() {
                     }
                     document.getElementById('centerImage').style.borderTopColor = "#B5E2E8";
                     console.log('rightWrist move up');
-                } else {
+                } else if (Math.abs(offsety) > threshold && offsety > 0) {
                     if (row < total) {
                         row += 1;
                     } else {
