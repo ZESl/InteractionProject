@@ -16,15 +16,30 @@ function setup() {
     video = createCapture(VIDEO);
     video.size(width, height);
 
+    let options = {
+        architecture: 'MobileNetV1',
+        imageScaleFactor: 0.3,
+        outputStride: 16,
+        flipHorizontal: false,
+        minConfidence: 0.5,
+        maxPoseDetections: 5,
+        scoreThreshold: 0.5,
+        nmsRadius: 20,
+        detectionType: 'single',
+        inputResolution: 513,
+        multiplier: 0.75,
+        quantBytes: 2,
+    };
+
     // Create a new poseNet method with a single detection
-    poseNet = ml5.poseNet(video, modelReady);
+    poseNet = ml5.poseNet(video, options, modelReady);
     // This sets up an event that fills the global variable "poses"
     // with an array every time new poses are detected
     poseNet.on('pose', function (results) {
         poses = results;
     });
 
-    console.log("start detecting...")
+    console.log("start detecting...");
     initHand();
 
     // Hide the video element, and just show the canvas
@@ -76,15 +91,15 @@ function waitSwitchOff() {
 function detectHandMovements() {
     if (poses.length > 0) {
         let pose = poses[0].pose;   //detect the first pose
-        let confidence = 0.1;
+        let confidence = 0.3;
         if (pose.leftElbow.confidence > confidence && pose.leftShoulder.confidence > confidence) {
             let y = pose.leftShoulder.y - pose.leftElbow.y;
-
+            // console.log(y);
             if (y > 10) {
                 if (detectSwitch) {
                     detectSwitch = false;
                     document.getElementById('start').innerHTML = "START";
-                    document.getElementById('canvasTop').style.backgroundColor = "#B7EF26";
+                    document.getElementById('canvasTop').style.backgroundColor = "#B6F139";
                     console.log("switch:off");
                 } else {
                     detectSwitch = true;
@@ -108,7 +123,7 @@ function changeCenterImage() {
         if (pose.rightWrist.confidence > confidence && pose.rightShoulder.confidence > confidence) {
             console.log("rightWrist:", pose.rightWrist, " rightShoulder", pose.rightShoulder);
             // threshold can be modified
-            let threshold = 100;
+            let threshold = 50;
 
             // let pose.rightShoulder be the center of the circle
             let offsetx = pose.rightWrist.x - pose.rightShoulder.x;     // x axis distance between elbow and shoulder
@@ -169,10 +184,10 @@ function changeCenterImage() {
 }
 
 function draw() {
-    // image(video, 0, 0, width, height);
-    // // We can call both functions to draw all keypoints and the skeletons
-    // drawKeypoints();
-    // drawSkeleton();
+    image(video, 0, 0, width, height);
+    // We can call both functions to draw all keypoints and the skeletons
+    drawKeypoints();
+    drawSkeleton();
     // call this function to detect hand movement and change the Center Image
     if (!waitSwitch) {
         detectHandMovements();
