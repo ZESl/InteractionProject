@@ -40,7 +40,7 @@
         #centerImage {
             position: absolute;
             z-index: 10;
-            top: 55%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
             border: 20px solid #EDECEC;
@@ -58,12 +58,12 @@
         #centerCanvas {
             position: absolute;
             width: 640px;
-            height: 500px;
+            height: 640px;
             z-index: 10;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #45B0BE;
+            /*background-color: #45B0BE;*/
             /*box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);*/
         }
 
@@ -76,35 +76,46 @@
             height: 20px;
         }
 
-        #canvasTop {
+        #canvasDown {
             position: absolute;
             width: 640px;
-            height: 220px;
+            height: 140px;
+            margin-top: 600px;
+            /*background-color: #B6F139;*/
+            /*text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);*/
+            /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);*/
+        }
+
+        #leftSwitch{
+            position: absolute;
+            width: 30px;
+            height: 16px;
+            margin-top: 2px;
+            margin-left: 200px;
+        }
+
+        #rightText{
+            position: absolute;
+            width: 300px;
+            height: 16px;
+            margin-left: 250px;
 
             font-family: PT Sans;
             font-style: normal;
             font-weight: bold;
-            text-align: center;
-
-            color: #FFFFFF;
-            background-color: #B6F139;
-
-            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            text-align: left;
+            font-size: 16px;
+            color: gray;
         }
 
-        #topText{
-            margin-top: 20px;
-            font-size: 20px;
-            line-height: 20px;
-        }
-        #start {
-            position: absolute;
-            width: 640px;
-            height: 200px;
-            font-size: 50px;
-            line-height: 70px;
-        }
+
+        /*#start {*/
+        /*    position: absolute;*/
+        /*    width: 640px;*/
+        /*    height: 200px;*/
+        /*    font-size: 50px;*/
+        /*    line-height: 70px;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -113,12 +124,13 @@
     <div id="left">
         <div id="centerCanvas">
 <!--            <div id="point"><img src="pointer.png" alt=""/></div>-->
-            <div id="canvasTop">
-                <div id="topText">Raise Left Arm To...</div>
-                <div id="start">START</div>
+            <!--            todo change to "images/500-500.png"-->
+            <img src="images/50-50.png" height="500px" width="500px" alt="" id="centerImage"/>
+            <div id="canvasDown">
+                <div id="leftSwitch"><img src="off.png" height="16px" width="30px" alt="" id="switchImage"/></div>
+                <div id="rightText">Raise Left Arm To START</div>
+<!--                <div id="start"></div>-->
             </div>
-<!--            todo change to "images/500-500.png"-->
-            <img src="images/50-50.png" alt="" id="centerImage"/>
         </div>
     </div>
 

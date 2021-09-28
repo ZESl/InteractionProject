@@ -98,13 +98,13 @@ function detectHandMovements() {
             if (y > 10) {
                 if (detectSwitch) {
                     detectSwitch = false;
-                    document.getElementById('start').innerHTML = "START";
-                    document.getElementById('canvasTop').style.backgroundColor = "#B6F139";
+                    document.getElementById('switchImage').src = "off.png";
+                    document.getElementById('rightText').innerHTML = "Raise Left Arm To START";
                     console.log("switch:off");
                 } else {
                     detectSwitch = true;
-                    document.getElementById('start').innerHTML = "STOP";
-                    document.getElementById('canvasTop').style.backgroundColor = "#FFD90F";
+                    document.getElementById('switchImage').src = "on.png";
+                    document.getElementById('rightText').innerHTML = "Raise Left Arm To END";
                     console.log("switch:on");
                 }
                 waitSwitch = true;
